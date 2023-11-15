@@ -1,19 +1,12 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import serializers
-from rareapi.models import Post, RareUser
+from rareapi.models import Post
 from django.contrib.auth.models import User
 from .Tags import TagSerializer
-from .users import UserSerializer
+from .users import UserSerializer, RareUserSerializer
 from .Categories import CategorySerializer
 
-
-class RareUserSerializer(serializers.ModelSerializer):
-    user=UserSerializer(many=False)
-    class Meta:
-        model = RareUser
-        fields = ("user", "active","profile_image_url", "bio")
-        
 
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False)
@@ -21,27 +14,38 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     tags = TagSerializer(many=True)
     category = CategorySerializer(many=False)
-    
+
     def get_is_owner(self, obj):
         # Check if the authenticated user is the owner
-        return self.context['request'].user == obj.user
+        return self.context["request"].user == obj.user
 
     class Meta:
         model = Post
-        fields = ['id', 'rare_user', 'category', 'title', 'publication_date', 'image_url', 'content', 'approved', 'tags', 'is_owner']
-        read_only_field = ['user']
+        fields = [
+            "id",
+            "rare_user",
+            "category",
+            "title",
+            "publication_date",
+            "image_url",
+            "content",
+            "approved",
+            "tags",
+            "is_owner",
+        ]
+        read_only_field = ["user"]
+
 
 class PostViewSet(viewsets.ViewSet):
-
     def list(self, request):
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True, context={'request': request})
+        serializer = PostSerializer(posts, many=True, context={"request": request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
             post = Post.objects.get(pk=pk)
-            serializer = PostSerializer(post, context={'request': request})
+            serializer = PostSerializer(post, context={"request": request})
             return Response(serializer.data)
 
         except Post.DoesNotExist:
@@ -49,14 +53,13 @@ class PostViewSet(viewsets.ViewSet):
 
     def create(self, request):
         # Get the data from the client's JSON payload
-        rare_user = request.data.get('rare_user')
-        category = request.data.get('category')
-        title = request.data.get('title')
-        publication_date = request.data.get('publication_date')
-        image_url = request.data.get('image_url')
-        content = request.data.get('content')
-        approved = request.data.get('approved')
-        
+        rare_user = request.data.get("rare_user")
+        category = request.data.get("category")
+        title = request.data.get("title")
+        publication_date = request.data.get("publication_date")
+        image_url = request.data.get("image_url")
+        content = request.data.get("content")
+        approved = request.data.get("approved")
 
         # Create a post database row first, so you have a
         # primary key to work with
@@ -68,19 +71,18 @@ class PostViewSet(viewsets.ViewSet):
             publication_date=publication_date,
             image_url=image_url,
             content=content,
-            approved=approved
-        ) 
+            approved=approved,
+        )
 
         # Establish the many-to-many relationships
-        tag_ids = request.data.get('tags', [])
+        tag_ids = request.data.get("tags", [])
         post.tags.set(tag_ids)
 
-        serializer = PostSerializer(post, context={'request': request})
+        serializer = PostSerializer(post, context={"request": request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk=None):
         try:
-
             post = Post.objects.get(pk=pk)
 
             # Is the authenticated user allowed to edit this post?
@@ -88,22 +90,21 @@ class PostViewSet(viewsets.ViewSet):
 
             serializer = PostSerializer(data=request.data)
             if serializer.is_valid():
-                post.rare_user = serializer.validated_data['rare_user']
-                post.category = serializer.validated_data['category']
-                post.title = serializer.validated_data['title']
-                post.publication_date = serializer.validated_data['publication_date']
-                post.image_url = serializer.validated_data['image_url']
-                post.content = serializer.validated_data['content']
-                post.approved = serializer.validated_data['approved']
+                post.rare_user = serializer.validated_data["rare_user"]
+                post.category = serializer.validated_data["category"]
+                post.title = serializer.validated_data["title"]
+                post.publication_date = serializer.validated_data["publication_date"]
+                post.image_url = serializer.validated_data["image_url"]
+                post.content = serializer.validated_data["content"]
+                post.approved = serializer.validated_data["approved"]
                 post.save()
 
-                tag_ids = request.data.get('tags', [])
+                tag_ids = request.data.get("tags", [])
                 post.tags.set(tag_ids)
 
-                serializer = PostSerializer(post, context={'request': request})
+                serializer = PostSerializer(post, context={"request": request})
                 return Response(None, status.HTTP_204_NO_CONTENT)
-       
-        
+
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
         except Post.DoesNotExist:
