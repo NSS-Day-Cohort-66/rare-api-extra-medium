@@ -11,7 +11,7 @@ from rareapi.models import RareUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "password"]
+        fields = ["id", "username", "password", "first_name", "last_name", "email"]
         extra_kwargs = {"password": {"write_only": True}}
 
 
@@ -34,7 +34,7 @@ class UserViewSet(viewsets.ViewSet):
             user = User.objects.create_user(
                 username=serializer.validated_data["username"],
                 password=serializer.validated_data["password"],
-                first_name=serializer.validated_data["first_name"],
+                first_name=serializer.validated_data['first_name'],
                 last_name=serializer.validated_data["last_name"],
                 email=serializer.validated_data["username"],
             )

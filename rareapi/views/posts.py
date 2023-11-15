@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rareapi.models import Post
 from django.contrib.auth.models import User
-from .Tags import TagSerializer
+from .tags import TagSerializer
 from .users import UserSerializer, RareUserSerializer
-from .Categories import CategorySerializer
+from .categories import CategorySerializer
 
 
 class PostSerializer(serializers.ModelSerializer):
