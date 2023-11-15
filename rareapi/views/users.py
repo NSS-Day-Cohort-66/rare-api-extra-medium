@@ -33,9 +33,10 @@ class UserViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             user = User.objects.create_user(
                 username=serializer.validated_data["username"],
+                password=serializer.validated_data["password"],
                 first_name=serializer.validated_data["first_name"],
                 last_name=serializer.validated_data["last_name"],
-                password=serializer.validated_data["password"],
+                email=serializer.validated_data["username"],
             )
             token, created = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_201_CREATED)
