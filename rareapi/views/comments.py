@@ -1,9 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import serializers
-from rareapi.models import Comment
+from rareapi.models import comment
 from .users import RareUserSerializer
-from .Posts import PostSerializer
+from .posts import PostSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return self.context["request"].user == obj.user
 
     class Meta:
-        model = Comment
+        model = comment
         fields = [
             "id",
             "user",
@@ -32,7 +32,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class CommentViewSet(viewsets.ViewSet):
     def list(self, request):
-        comments = Comment.objects.all()
+        comments = comment.objects.all()
         serializer = CommentSerializer(
             comments, many=True, context={"request": request}
         )
@@ -40,11 +40,11 @@ class CommentViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         try:
-            comment = Comment.objects.get(pk=pk)
+            comment = comment.objects.get(pk=pk)
             serializer = CommentSerializer(comment, context={"request": request})
             return Response(serializer.data)
 
-        except Comment.DoesNotExist:
+        except comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def create(self, request):
@@ -56,7 +56,7 @@ class CommentViewSet(viewsets.ViewSet):
 
         # Create a comment database row first, so you have a
         # primary key to work with
-        comment = Comment.objects.create(
+        comment = comment.objects.create(
             # maybe issues with post /  request.user
             post=post,
             author=author,
@@ -69,7 +69,7 @@ class CommentViewSet(viewsets.ViewSet):
 
     def update(self, request, pk=None):
         try:
-            comment = Comment.objects.get(pk=pk)
+            comment = comment.objects.get(pk=pk)
 
             # Is the authenticated user allowed to edit this comment?
             self.check_object_permissions(request, comment)
@@ -87,16 +87,16 @@ class CommentViewSet(viewsets.ViewSet):
 
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
-        except Comment.DoesNotExist:
+        except comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, pk=None):
         try:
-            comment = Comment.objects.get(pk=pk)
+            comment = comment.objects.get(pk=pk)
             self.check_object_permissions(request, comment)
             comment.delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
 
-        except Comment.DoesNotExist:
+        except comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
