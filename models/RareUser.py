@@ -8,4 +8,4 @@ class RareUser(models.Model):
     profile_image_url = models.URLField()
     created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField()
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="rare_users")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="rare_user")
