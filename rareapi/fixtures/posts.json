@@ -1,0 +1,41 @@
+[
+    {
+        "model": "rareapi.post",
+        "pk": 1,
+        "fields": {
+            "rare_user": 1,
+            "category": 1,
+            "title": "Post Title 1",
+            "publication_date": "2023-01-01",
+            "image_url": "https://example.com/image1.jpg",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "approved": true
+        }
+    },
+    {
+        "model": "rareapi.post",
+        "pk": 2,
+        "fields": {
+            "rare_user": 1,
+            "category": 2,
+            "title": "Post Title 2",
+            "publication_date": "2023-02-01",
+            "image_url": "https://example.com/image2.jpg",
+            "content": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "approved": true
+        }
+    },
+    {
+        "model": "rareapi.post",
+        "pk": 3,
+        "fields": {
+            "rare_user": 1,
+            "category": 1,
+            "title": "Post Title 3",
+            "publication_date": "2023-03-01",
+            "image_url": "https://example.com/image3.jpg",
+            "content": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "approved": false
+        }
+    }
+]
