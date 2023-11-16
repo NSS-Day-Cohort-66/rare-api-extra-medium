@@ -44,7 +44,7 @@ class CommentViewSet(viewsets.ViewSet):
             serializer = CommentSerializer(comment, context={"request": request})
             return Response(serializer.data)
 
-        except comment.DoesNotExist:
+        except Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def create(self, request):
@@ -87,7 +87,7 @@ class CommentViewSet(viewsets.ViewSet):
 
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
-        except comment.DoesNotExist:
+        except Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, pk=None):
@@ -98,5 +98,5 @@ class CommentViewSet(viewsets.ViewSet):
 
             return Response(status=status.HTTP_204_NO_CONTENT)
 
-        except comment.DoesNotExist:
+        except Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
