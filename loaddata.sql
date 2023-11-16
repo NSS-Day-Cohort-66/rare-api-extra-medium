@@ -88,3 +88,5 @@ CREATE TABLE "Categories" (
 INSERT INTO rareapi_category ('label') VALUES ('News');
 INSERT INTO rareapi_tag ('label') VALUES ('JavaScript');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
+
+DELETE FROM auth_user WHERE id = 9;
