@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RareUserSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+    user = UserSerializer()
 
     class Meta:
         model = RareUser
@@ -37,6 +37,12 @@ class UserViewSet(viewsets.ViewSet):
                 first_name=serializer.validated_data["first_name"],
                 last_name=serializer.validated_data["last_name"],
                 email=serializer.validated_data["username"],
+            )
+            rare_user = RareUser.objects.create(
+                user=user,
+                active=True,
+                profile_image_url= request.data.get("profile_image_url"),
+                bio= request.data.get("bio"),
             )
             token, created = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_201_CREATED)
