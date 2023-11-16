@@ -4,13 +4,12 @@ from rest_framework import serializers
 from rareapi.models import Post
 from django.contrib.auth.models import User
 from .tags import TagSerializer
-from .users import UserSerializer, RareUserSerializer
+from .users import RareUserSerializer
 from .categories import CategorySerializer
 
 
 class PostSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
-    rare_user = RareUserSerializer(many=False)
+    user = RareUserSerializer(many=False)
     is_owner = serializers.SerializerMethodField()
     tags = TagSerializer(many=True)
     category = CategorySerializer(many=False)
@@ -23,7 +22,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = [
             "id",
-            "rare_user",
+            "user",
             "category",
             "title",
             "publication_date",
@@ -33,7 +32,6 @@ class PostSerializer(serializers.ModelSerializer):
             "tags",
             "is_owner",
         ]
-        read_only_field = ["user"]
 
 
 class PostViewSet(viewsets.ViewSet):
