@@ -9,25 +9,25 @@ from .posts import PostSerializer
 class CommentSerializer(serializers.ModelSerializer):
     # !Unsure of which user serializer to use. Don't forget to import UserSerializer from .users
     # user = UserSerializer(many=False)
-    user = RareUserSerializer(many=False)
+    # user = RareUserSerializer(many=False)
     is_owner = serializers.SerializerMethodField()
     post = PostSerializer(many=False)
 
     def get_is_owner(self, obj):
         # Check if the authenticated user is the owner
-        return self.context["request"].user == obj.user
+        return self.context["request"].user == obj.author
 
     class Meta:
         model = Comment
         fields = [
             "id",
-            "user",
+            # "user",
             "post",
             "author",
             "content",
             "is_owner",
         ]
-        read_only_field = ["user"]
+        # read_only_field = ["user"]
 
 
 class CommentViewSet(viewsets.ViewSet):
