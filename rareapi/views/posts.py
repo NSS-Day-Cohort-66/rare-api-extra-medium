@@ -1,12 +1,25 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import serializers
-from rareapi.models import Post
+from rareapi.models import Post, RareUser, Category
 from django.contrib.auth.models import User
 from .tags import TagSerializer
 from .users import RareUserSerializer
 from .categories import CategorySerializer
 
+
+class SimplePostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post
+        fields = [
+            "category",
+            "title",
+            "image_url",
+            "content",
+            "approved",
+            "tags"
+        ]
 
 class PostSerializer(serializers.ModelSerializer):
     rare_user = RareUserSerializer(many=False)
@@ -51,8 +64,8 @@ class PostViewSet(viewsets.ViewSet):
 
     def create(self, request):
         # Get the data from the client's JSON payload
-        rare_user = request.data.get("rare_user")
-        category = request.data.get("category")
+        rare_user = RareUser.objects.get(pk=request.data["rare_user"])
+        category = Category.objects.get(pk=request.data["category"])
         title = request.data.get("title")
         publication_date = request.data.get("publication_date")
         image_url = request.data.get("image_url")
@@ -86,12 +99,12 @@ class PostViewSet(viewsets.ViewSet):
             # Is the authenticated user allowed to edit this post?
             self.check_object_permissions(request, post)
 
-            serializer = PostSerializer(data=request.data)
+            serializer = SimplePostSerializer(data=request.data)
             if serializer.is_valid():
-                post.rare_user = serializer.validated_data["rare_user"]
+                # post.rare_user = serializer.validated_data["rare_user"]
                 post.category = serializer.validated_data["category"]
                 post.title = serializer.validated_data["title"]
-                post.publication_date = serializer.validated_data["publication_date"]
+                # post.publication_date = serializer.validated_data["publication_date"]
                 post.image_url = serializer.validated_data["image_url"]
                 post.content = serializer.validated_data["content"]
                 post.approved = serializer.validated_data["approved"]
