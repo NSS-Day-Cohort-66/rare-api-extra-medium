@@ -2,9 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import serializers
 from rareapi.models import Comment, RareUser, Post
-from .users import RareUserSerializer, UserSerializer
+from .users import RareUserSerializer
 from .posts import PostSerializer
-
 
 class CommentSerializer(serializers.ModelSerializer):
     # !Unsure of which user serializer to use. Don't forget to import UserSerializer from .users
