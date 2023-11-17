@@ -1,21 +1,21 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import serializers
-from rareapi.models import Comment
-from .users import RareUserSerializer
+from rareapi.models import Comment, RareUser, Post
+from .users import RareUserSerializer, UserSerializer
 from .posts import PostSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
     # !Unsure of which user serializer to use. Don't forget to import UserSerializer from .users
     # user = UserSerializer(many=False)
-    # user = RareUserSerializer(many=False)
+    author = RareUserSerializer(many=False)
     is_owner = serializers.SerializerMethodField()
     post = PostSerializer(many=False)
 
     def get_is_owner(self, obj):
         # Check if the authenticated user is the owner
-        return self.context["request"].user == obj.author
+        return self.context["request"].user == obj.author.user
 
     class Meta:
         model = Comment
@@ -49,8 +49,8 @@ class CommentViewSet(viewsets.ViewSet):
 
     def create(self, request):
         # Get the data from the client's JSON payload
-        post = request.data.get("post")
-        author = request.data.get("author")
+        post = Post.objects.get(pk=request.data["post"])
+        author = RareUser.objects.get(pk=request.data["author"])
         content = request.data.get("content")
         created_on = request.data.get("created_on")
 
