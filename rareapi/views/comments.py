@@ -5,6 +5,16 @@ from rareapi.models import Comment, RareUser, Post
 from .users import RareUserSerializer
 from .posts import PostSerializer
 
+class SimpleCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = [
+            "post",
+            "author",
+            "content",
+        ]
+
 class CommentSerializer(serializers.ModelSerializer):
     # !Unsure of which user serializer to use. Don't forget to import UserSerializer from .users
     # user = UserSerializer(many=False)
@@ -73,12 +83,12 @@ class CommentViewSet(viewsets.ViewSet):
             # Is the authenticated user allowed to edit this comment?
             self.check_object_permissions(request, comment)
 
-            serializer = CommentSerializer(data=request.data)
+            serializer = SimpleCommentSerializer(data=request.data)
             if serializer.is_valid():
                 comment.post = serializer.validated_data["post"]
                 comment.author = serializer.validated_data["author"]
                 comment.content = serializer.validated_data["content"]
-                comment.created_on = serializer.validated_data["created_on"]
+                # comment.created_on = serializer.validated_data["created_on"]
                 comment.save()
 
                 serializer = CommentSerializer(comment, context={"request": request})
