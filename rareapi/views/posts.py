@@ -10,11 +10,11 @@ from .categories import CategorySerializer
 
 class SimplePostSerializer(serializers.ModelSerializer):
     # is_owner = serializers.SerializerMethodField()
-    
+
     # def get_is_owner(self, obj):
     #     # Check if the authenticated user is the owner
     #     return self.context["request"].user == obj.rare_user.user
-    
+
     class Meta:
         model = Post
         fields = [
@@ -23,9 +23,10 @@ class SimplePostSerializer(serializers.ModelSerializer):
             "image_url",
             "content",
             "approved",
-            "tags", 
-            "is_owner",
+            "tags",
+            # "is_owner",
         ]
+
 
 class PostSerializer(serializers.ModelSerializer):
     rare_user = RareUserSerializer(many=False)
