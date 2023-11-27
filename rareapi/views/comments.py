@@ -59,7 +59,7 @@ class CommentViewSet(viewsets.ViewSet):
     def create(self, request):
         # Get the data from the client's JSON payload
         post = Post.objects.get(pk=request.data["post"])
-        author = RareUser.objects.get(pk=request.data["author"])
+        author = RareUser.objects.get(user=request.auth.user)
         content = request.data.get("content")
         created_on = request.data.get("created_on")
 
