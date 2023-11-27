@@ -71,7 +71,7 @@ class PostViewSet(viewsets.ViewSet):
 
     def create(self, request):
         # Get the data from the client's JSON payload
-        rare_user = RareUser.objects.get(pk=request.data["rare_user"])
+        rare_user = RareUser.objects.get(user=request.auth.user)
         category = Category.objects.get(pk=request.data["category"])
         title = request.data.get("title")
         publication_date = request.data.get("publication_date")
