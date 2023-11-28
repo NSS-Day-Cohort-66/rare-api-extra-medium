@@ -1,0 +1,1 @@
+from .rare_tests import RareAPITests
