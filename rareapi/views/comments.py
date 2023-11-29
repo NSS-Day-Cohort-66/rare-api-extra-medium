@@ -5,8 +5,8 @@ from rareapi.models import Comment, RareUser, Post
 from .users import RareUserSerializer
 from .posts import PostSerializer
 
-class SimpleCommentSerializer(serializers.ModelSerializer):
 
+class SimpleCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = [
@@ -14,6 +14,7 @@ class SimpleCommentSerializer(serializers.ModelSerializer):
             "author",
             "content",
         ]
+
 
 class CommentSerializer(serializers.ModelSerializer):
     # !Unsure of which user serializer to use. Don't forget to import UserSerializer from .users
@@ -35,6 +36,7 @@ class CommentSerializer(serializers.ModelSerializer):
             "author",
             "content",
             "is_owner",
+            "created_on",
         ]
         # read_only_field = ["user"]
 
