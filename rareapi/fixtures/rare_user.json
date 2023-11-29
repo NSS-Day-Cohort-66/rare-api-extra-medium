@@ -1,0 +1,28 @@
+[
+    {"model": "rareapi.rareuser", 
+    "pk": 1, "fields": {
+        "bio": "", 
+        "profile_image_url": "1", 
+        "created_on": "2023-11-21T04:19:18.878Z", 
+        "active": true, 
+        "user": 1}
+    },
+     {"model": "rareapi.rareuser", 
+     "pk": 2, 
+     "fields": {
+        "bio": "m", 
+        "profile_image_url": "m", 
+        "created_on": "2023-11-21T05:14:44.231Z", 
+        "active": true, 
+        "user": 2}
+    }, 
+     {"model": "rareapi.rareuser", 
+     "pk": 3, 
+     "fields": {
+        "bio": "j", 
+        "profile_image_url": "j", 
+        "created_on": "2023-11-27T20:35:03.355Z", 
+        "active": true, 
+        "user": 3}
+    }
+    ]
