@@ -1,0 +1,49 @@
+[
+  {
+    "model": "rareapi.rareuser",
+    "pk": 1,
+    "fields": {
+      "bio": "blah, blah",
+      "profile_image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW9Enk8K4xVx-NCWxqmBCqxrN7N3V02Agq7A&usqp=CAU",
+      "created_on": "2023-11-16T19:21:14.185Z",
+      "active": true,
+      "user": 3
+    }
+  },
+
+  {
+    "model": "rareapi.rareuser",
+    "pk": 2,
+    "fields": {
+      "bio": "Waka, waka, waka",
+      "profile_image_url": "url",
+      "created_on": "2023-11-17T15:17:54.606Z",
+      "active": true,
+      "user": 5
+    }
+  },
+
+  {
+    "model": "rareapi.rareuser",
+    "pk": 3,
+    "fields": {
+      "bio": "Hehe",
+      "profile_image_url": "https://i5.walmartimages.com/asr/4ad7001b-3d67-48f1-9892-cd7a3439b15a.83bc9845bef9a9b0e86300d9b51a9cba.jpeg",
+      "created_on": "2023-11-20T16:37:13.794Z",
+      "active": true,
+      "user": 6
+    }
+  },
+
+  {
+    "model": "rareapi.rareuser",
+    "pk": 4,
+    "fields": {
+      "bio": "Yup",
+      "profile_image_url": "https://m.media-amazon.com/images/I/A1xRLOh8ukL._AC_UF894,1000_QL80_.jpg",
+      "created_on": "2023-11-20T21:24:42.367Z",
+      "active": true,
+      "user": 7
+    }
+  }
+]
