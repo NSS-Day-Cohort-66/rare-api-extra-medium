@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-from rareapi.models import Comment, RareUser
+from rareapi.models import RareUser
 
 
 class CommentTests(APITestCase):
@@ -25,34 +25,3 @@ class CommentTests(APITestCase):
         self.assertEqual(json_response[0]["content"], "This is a great post!")
         self.assertEqual(json_response[1]["content"], "I enjoyed reading this.")
         self.assertEqual(json_response[2]["content"], "Interesting perspective.")
-
-    # def test_change_comments(self):
-    #     comment = Comment()
-    #     comment.post = 1
-    #     comment.author = 1
-    #     comment.content = "Original Comment"
-    #     comment.save()
-
-    #     data = {"post": 1, "author": 1, "content": "Edited Comment"}
-
-    #     response = self.client.put(f"/comments/{comment.id}", data, format="json")
-
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
-    #     response = self.client.get(f"/comments/{comment.id}")
-    #     json_response = json.loads(response.content)
-
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(json_response["content"], "Edited Comment")
-
-    # def test_create_comment(self):
-    #     data = {"post": 1, "author": self.rare_user.id, "content": "test"}
-
-    #     response = self.client.post("/comments", data, format="json")
-
-    #     json_response = json.loads(response.content)
-
-    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-    #     self.assertEqual(json_response["post"], 1)
-    #     self.assertEqual(json_response["author"], self.rare_user.id)
-    #     self.assertEqual(json_response["content"], "test")
