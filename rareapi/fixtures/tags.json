@@ -1,23 +1,51 @@
 [
     {
-        "model": "rareapi.tag",
-        "pk": 1,
+        "model": "rareapi.tag", 
+        "pk": 1, 
         "fields": {
             "label": "Funny"
         }
-    },
+    }, 
     {
-        "model": "rareapi.tag",
-        "pk": 2,
+        "model": "rareapi.tag", 
+        "pk": 2, 
         "fields": {
             "label": "Sad"
         }
-    },
+    }, 
     {
-        "model": "rareapi.tag",
-        "pk": 3,
+        "model": "rareapi.tag", 
+        "pk": 3, 
         "fields": {
             "label": "Spooky"
+        }
+    }, 
+    {
+        "model": "rareapi.tag", 
+        "pk": 4, 
+        "fields": {
+            "label": "Exciting"
+        }
+    }, 
+    {
+        "model": "rareapi.tag", 
+        "pk": 6, 
+        "fields": {
+            "label": "Test Post Tag"
+        }
+    }, 
+    {    
+        "model": "rareapi.tag", 
+        "pk": 7, 
+        "fields": {
+            "label": "Awesome Tag!!"
+        }
+    }, 
+    {
+        "model": "rareapi.tag", 
+        "pk": 11, 
+        "fields": {
+            "label": "New Tag"
         }
     }
 ]
