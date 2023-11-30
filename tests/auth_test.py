@@ -29,4 +29,25 @@ class AuthTests(APITestCase):
         json_response = json.loads(response.content)
         self.assertEqual(response.status_code,status.HTTP_200_OK)
         self.assertEqual(json_response["token"], "1600073627c3344754172dd997452440b1ddba7a")
+
+    def test_register_user(self):
+        
+        data = {
+            "username": "new_user",
+            "password": "new_user",
+            "first_name": "new",
+            "last_name": "user",
+            "email": "new@user.com",
+            "bio": "I am a new user",
+            "profile_image_url": "http://example.com",
+            "active": True,
+        }
+
+
+        response = self.client.post("/register", data, format='json')
+        json_response = json.loads(response.content)
+        self.assertEqual(response.status_code,status.HTTP_201_CREATED)
+        self.assertIsNotNone(json_response["token"])
+
+
         
