@@ -1,1 +1,1 @@
-from .comment_tests import CommentTests
+from .category_tests import CategoryTests
