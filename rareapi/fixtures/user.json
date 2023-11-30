@@ -17,7 +17,6 @@
       "user_permissions": []
     }
   },
-
   {
     "model": "auth.user",
     "pk": 2,
